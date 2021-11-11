@@ -3,10 +3,10 @@ SpRY (low efficiency PAM),20,NYN,f
 SpRY (high efficiency PAM),20,NRN,f
 "SpRY, Walton et al Science 2020",20,NNN,f
 Thermo Cas9,20,NNNNCNAA,f
-ÊenCas12a E174R/S542R/K548R (1),23,TTYN,t
-ÊenCas12a E174R/S542R/K548R (2),23,VTTV,t
-ÊenCas12a E174R/S542R/K548R (3),23,TRTV,t
-ÊMAD7 Nuclease,20,YTTV,t
+enCas12a E174R/S542R/K548R (1),23,TTYN,t
+enCas12a E174R/S542R/K548R (2),23,VTTV,t
+enCas12a E174R/S542R/K548R (3),23,TRTV,t
+MAD7 Nuclease,20,YTTV,t
 CCCA LbCpf1,23,GGTT,t
 CCCA LbCpf1,23,CCCA,t
 TCCA LbCpf1,23,TCCA,t
@@ -17,7 +17,7 @@ TYCV As-Cpf1 K607R,23,TYCV,t
 ShCAST/AcCAST,23,NGTN,t
 BhCas12b v4,23,ATTN,t
 Cas12a (Cpf1) - low efficiency,23,TTTN,t
-ÊCas12a (Cpf1) - 21bp guides recommended by IDT,21,TTTV,t
+Cas12a (Cpf1) - 21bp guides recommended by IDT,21,TTTV,t
 "Cas12a (Cpf1)Ê - recommended, 23bp guides",23,TTTV,t
 CasX,20,TTCN,f
 "Cas9 Campylobacter jejuni, opt. efficiency",22,NNNVRYAC,f
@@ -27,15 +27,15 @@ Cas9 N. Meningitidis,20,NNNNGMTT,f
 Cas9 S. Thermophilus,20,NGGNG,f
 Cas9 S. Thermophilus,20,NNAGAA,f
 Cas9 S. Pyogenes mutant VRER,20,NGCG,f
-ÊNme2Cas9,24,NNNNCC,f
+Nme2Cas9,24,NNNNCC,f
 Cas9 S. Pyogenes mutant VQR,20,NGA,f
 KKH SaCas9 with 20bp-guides,20,NNNRRT,f
 KKH SaCas9,21,NNNRRT,f
 "xCas9, recommended PAM",20,NGK,f
-ÊCas9 S. Aureus with 20bp-guides,20,NNGRRT,f
-ÊCas9 S. Aureus,21,NNGRRT,f
-ÊiSpyMacCas9,20,NAA,f
+Cas9 S. Aureus with 20bp-guides,20,NNGRRT,f
+Cas9 S. Aureus,21,NNGRRT,f
+iSpyMacCas9,20,NAA,f
 "Cas9 S. canis - high efficiency PAM, recommended",20,NNGT,f
 SpG,20,NGN,f
-ÊCas9 S. canis,20,NNG,f
+Cas9 S. canis,20,NNG,f
 "Sp Cas9, SpCas9-HF1, eSpCas9 1.1",20,NGG,f

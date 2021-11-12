@@ -1,7 +1,7 @@
 name,bp,squence,end
-SpRY (low efficiency PAM),20,NYN,f
-SpRY (high efficiency PAM),20,NRN,f
-SpRY (Walton et al. Science 2020),20,NNN,f
+SpRY - low efficiency PAM,20,NYN,f
+SpRY - high efficiency PAM,20,NRN,f
+SpRY - Walton et al. Science 2020,20,NNN,f
 Thermo Cas9,20,NNNNCNAA,f
 enCas12a E174R/S542R/K548R (1),23,TTYN,t
 enCas12a E174R/S542R/K548R (2),23,VTTV,t
@@ -20,19 +20,19 @@ Cas12a (Cpf1) - low efficiency,23,TTTN,t
 Cas12a (Cpf1) - 21bp guides,21,TTTV,t
 Cas12a (Cpf1) - 23bp guides,23,TTTV,t
 CasX,20,TTCN,f
-"Cas9 Campylobacter jejuni, opt. efficiency",22,NNNVRYAC,f
-"Cas9 Campylobacter jejuni, revised PAM",22,NNNNRYAC,f
-"Cas9 Campylobacter jejuni, original PAM",20,NNNNACA,f
+Cas9 Campylobacter jejuni - opt. efficiency,22,NNNVRYAC,f
+Cas9 Campylobacter jejuni - revised PAM,22,NNNNRYAC,f
+Cas9 Campylobacter jejuni - original PAM,20,NNNNACA,f
 Cas9 N. Meningitidis,20,NNNNGMTT,f
-Cas9 S. Thermophilus,20,NGGNG,f
-Cas9 S. Thermophilus,20,NNAGAA,f
+Cas9 S. Thermophilus (1),20,NGGNG,f
+Cas9 S. Thermophilus (2),20,NNAGAA,f
 Cas9 S. Pyogenes mutant VRER,20,NGCG,f
 Nme2Cas9,24,NNNNCC,f
 Cas9 S. Pyogenes mutant VQR,20,NGA,f
-"KKH SaCas9, 20bp guides",20,NNNRRT,f
+KKH SaCas - 20bp guides,20,NNNRRT,f
 KKH SaCas9,21,NNNRRT,f
 xCas9,20,NGK,f
-"Cas9 S. Aureus, 20bp guides",20,NNGRRT,f
+Cas9 S. Aureus - 20bp guides,20,NNGRRT,f
 Cas9 S. Aureus,21,NNGRRT,f
 iSpyMacCas9,20,NAA,f
 Cas9 S. canis - high efficiency PAM,20,NNGT,f

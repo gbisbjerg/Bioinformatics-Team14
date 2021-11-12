@@ -18,7 +18,7 @@ ShCAST/AcCAST,23,NGTN,t
 BhCas12b v4,23,ATTN,t
 Cas12a (Cpf1) - low efficiency,23,TTTN,t
 Cas12a (Cpf1) - 21bp guides recommended by IDT,21,TTTV,t
-"Cas12a (Cpf1)Ê - recommended, 23bp guides",23,TTTV,t
+"Cas12a (Cpf1) - recommended, 23bp guides",23,TTTV,t
 CasX,20,TTCN,f
 "Cas9 Campylobacter jejuni, opt. efficiency",22,NNNVRYAC,f
 "Cas9 Campylobacter jejuni, revised PAM",22,NNNNRYAC,f

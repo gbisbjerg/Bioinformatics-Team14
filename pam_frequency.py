@@ -1,5 +1,7 @@
+import pandas as pd
+from Trie import *
 
-import pandas as pd 
+
 translation = {
     "A" : ["A"], 
     "C" : ["C"],
@@ -19,6 +21,7 @@ translation = {
     "N" : ["A", "G", "C", "T"]
 }
 
+
 def process_pam_csv(filename): 
     df = pd.read_csv (filename)
     return df 
@@ -29,7 +32,7 @@ def create_possibilities(filename):
     list_of_lists =  []
     all_lists = []
     for ind in df.index:
-        string_ = df['squence'][ind]
+        string_ = df['sequence'][ind]
         list_ = [char for char in string_]
 
         for c in list_: 
@@ -53,23 +56,41 @@ def create_possibilities(filename):
     df['possibilities'] = all_lists
     return df 
 
+
+def build_pam_trie(df):
+   trie = Trie()
+   for i in df.index:
+      pam = df['sequence'][i]
+      sequences = df['possibilities'][i]
+      for sequence in sequences:
+         trie.insert(pam, sequence)
+   return trie
+
+
+def process_genome_txt(file_name):
+   genome = ""
+   f = open(file_name)
+   lines = f.readlines()
+   for line in lines:
+      genome += line[ : -1]
+      f.close()
+   return genome
+
+
+def generate_pam_frequencies(df):
+   pam_frequencies = {}
+   trie = build_pam_trie(df)
+   genome = process_genome_txt("sample1.txt")
+   for i in range(len(genome)):
+      trie.search(genome, i, pam_frequencies)
+   return pam_frequencies
+
+
 def main():
-    df = create_possibilities("pam_raw.csv")
-    print("df output", df)
-            
+   df = create_possibilities("pam_raw.csv")
+   pam_frequencies = generate_pam_frequencies(df)
+   print(pam_frequencies)
+
 
 if __name__ == '__main__': 
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-

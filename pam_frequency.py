@@ -77,19 +77,53 @@ def process_genome_txt(file_name):
    return genome
 
 
-def generate_pam_frequencies(df):
-   pam_frequencies = {}
-   trie = build_pam_trie(df)
-   genome = process_genome_txt("sample1.txt")
+def generate_pam_positions(trie):
+   pam_positions = {}
+   genome = process_genome_txt("sample1_mutation.txt")
    for i in range(len(genome)):
-      trie.search(genome, i, pam_frequencies)
-   return pam_frequencies
+      trie.search(genome, i, pam_positions)
+   return pam_positions
+
+
+def build_pam_map(df):
+   pam_map = {}
+   max_len = 0
+   for i in df.index:
+      pam = df['sequence'][i]
+      sequences = df['possibilities'][i]
+      for sequence in sequences:
+         max_len = max(max_len, len(sequence))
+         if sequence in pam_map:
+            pam_map[sequence].append(pam)
+         else:
+            pam_map[sequence] = [pam]
+   return pam_map, max_len
+
+
+def generate_pam_positions_naive(pam_map, max_len):
+   pam_positions = {}
+   genome = process_genome_txt("sample1_mutation.txt")
+   for start in range(len(genome)):
+      for offset in range(1, min(max_len, len(genome) - start)):
+         sequence = genome[start : start + offset]
+         if sequence in pam_map:
+            pams = pam_map[sequence]
+            for pam in pams:
+               if pam in pam_positions:
+                  pam_positions[pam].append(start)
+               else:
+                  pam_positions[pam] = [start]
+   return pam_positions
 
 
 def main():
    df = create_possibilities("pam_raw.csv")
-   pam_frequencies = generate_pam_frequencies(df)
-   print(pam_frequencies)
+   pam_trie = build_pam_trie(df)
+   pam_positions = generate_pam_positions(pam_trie)
+   print(pam_positions)
+   pam_map, max_len = build_pam_map(df)
+   pam_positions = generate_pam_positions_naive(pam_map, max_len)
+   print(pam_positions)
 
 
 if __name__ == '__main__': 

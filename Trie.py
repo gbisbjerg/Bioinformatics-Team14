@@ -21,15 +21,15 @@ class Trie:
             next.keys.add(key)
          curr = next
 
-   def search(self, genome, index, frequencies):
+   def search(self, genome, index, positions):
       curr = self.root
       i = index
       while curr is not None and i < len(genome):
          char = genome[i]
          for key in curr.keys:
-            if key in frequencies:
-               frequencies[key] = frequencies[key] + 1
+            if key in positions:
+               positions[key].append(index)
             else:
-               frequencies[key] = 1
+               positions[key] = [index]
          curr = curr.children[char]
          i += 1

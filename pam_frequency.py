@@ -1,6 +1,6 @@
 import pandas as pd
-from Trie import *
-
+from PamTrie import *
+import time
 
 translation = {
     "A" : ["A"], 
@@ -77,9 +77,8 @@ def process_genome_txt(file_name):
    return genome
 
 
-def generate_pam_positions(trie):
+def generate_pam_positions_trie(trie, genome):
    pam_positions = {}
-   genome = process_genome_txt("sample1_mutation.txt")
    for i in range(len(genome)):
       trie.search(genome, i, pam_positions)
    return pam_positions
@@ -100,9 +99,8 @@ def build_pam_map(df):
    return pam_map, max_len
 
 
-def generate_pam_positions_naive(pam_map, max_len):
+def generate_pam_positions_hashmap(pam_map, max_len, genome):
    pam_positions = {}
-   genome = process_genome_txt("sample1_mutation.txt")
    for start in range(len(genome)):
       for offset in range(1, min(max_len, len(genome) - start)):
          sequence = genome[start : start + offset]
@@ -118,12 +116,21 @@ def generate_pam_positions_naive(pam_map, max_len):
 
 def main():
    df = create_possibilities("pam_raw.csv")
+   genome = process_genome_txt("sample_2m.txt")
+   start1 = time.time()
    pam_trie = build_pam_trie(df)
-   pam_positions = generate_pam_positions(pam_trie)
-   print(pam_positions)
+   start2 = time.time()
+   pam_positions = generate_pam_positions_trie(pam_trie, genome)
+   end1 = time.time()
+   start3 = time.time()
    pam_map, max_len = build_pam_map(df)
-   pam_positions = generate_pam_positions_naive(pam_map, max_len)
-   print(pam_positions)
+   start4 = time.time()
+   pam_positions = generate_pam_positions_hashmap(pam_map, max_len, genome)
+   end2 = time.time()
+   print("Hashmap (no construction) " + str(round(end2 - start4, 9)))
+   print("Trie (no construction) " + str(round(end1 - start2, 9)))
+   print("Hashmap (with construction) " + str(round(end2 - start3, 9)))
+   print("Trie (with construction) " + str(round(end1 - start1, 9)))
 
 
 if __name__ == '__main__': 

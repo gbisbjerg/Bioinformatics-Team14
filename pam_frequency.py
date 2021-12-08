@@ -54,6 +54,7 @@ def create_possibilities(filename):
         list_of_lists = []
 
     df['possibilities'] = all_lists
+    print(df)
     return df 
 
 
@@ -114,9 +115,53 @@ def generate_pam_positions_hashmap(pam_map, max_len, genome):
    return pam_positions
 
 
+def pick_best_pam(genome, pam_positions, index_of_mutation):
+
+   smallest_num_pams = len(genome)
+   min_ = len(genome)
+   closest_pam = ""
+
+   for pam in pam_positions.keys(): 
+      if len(pam_positions[pam]) < smallest_num_pams: 
+         smallest_num_pams =  len(pam_positions[pam])
+         positions_list = pam_positions[pam]
+
+         for p in positions_list:
+            distance = abs(index_of_mutation[0] - p)
+            if distance < min_: 
+               min_ =  distance
+               closest_pam = pam 
+
+   if pam == "": 
+      return pam_positions.keys[0]
+
+   print("\nIdeal PAM= {}".format(closest_pam))
+   print("\tOccurs {} times in the sequence".format(smallest_num_pams))
+   print("\tIs {} neucleotide(s) away from the mutation".format(min_))
+
+   return closest_pam
+
+
+def MutationLocation(source_file, reference_file):
+    source_file = open(source_file, "r")
+    reference_file = open(reference_file, "r")
+    source = source_file.read()
+    reference = reference_file.read()
+
+    mutation_index = []
+    for i, nucleotide in enumerate(source):
+        if (reference[i] != nucleotide):
+            mutation_index.append(i)
+
+    return mutation_index
+
 def main():
    df = create_possibilities("pam_raw.csv")
-   genome = process_genome_txt("sample_2m.txt")
+   mutated_file = "sample_2k_mutation.txt"
+   regular_file = "sample_2k.txt"
+   genome = process_genome_txt(mutated_file)
+   mutated_genome = process_genome_txt(regular_file)
+   index_of_mutation = MutationLocation(mutated_file, regular_file)
    start1 = time.time()
    pam_trie = build_pam_trie(df)
    start2 = time.time()
@@ -131,6 +176,11 @@ def main():
    print("Trie (no construction) " + str(round(end1 - start2, 9)))
    print("Hashmap (with construction) " + str(round(end2 - start3, 9)))
    print("Trie (with construction) " + str(round(end1 - start1, 9)))
+
+   best_pam = pick_best_pam(genome, pam_positions, index_of_mutation)
+   pam_info = df.loc[df['sequence'] == best_pam]
+   print("Additional PAM Info:\n{}".format(pam_info))
+
 
 
 if __name__ == '__main__': 

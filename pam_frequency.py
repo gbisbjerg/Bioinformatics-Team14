@@ -1,6 +1,7 @@
 import pandas as pd
 from PamTrie import *
 import time
+import argparse
 
 translation = {
     "A" : ["A"], 
@@ -32,7 +33,7 @@ def create_possibilities(filename):
     list_of_lists =  []
     all_lists = []
     for ind in df.index:
-        string_ = df['sequence'][ind]
+        string_ = df['Sequence'][ind]
         list_ = [char for char in string_]
 
         for c in list_: 
@@ -53,16 +54,15 @@ def create_possibilities(filename):
         all_lists.append(list_of_lists)
         list_of_lists = []
 
-    df['possibilities'] = all_lists
-    print(df)
+    df['Possibilities'] = all_lists
     return df 
 
 
 def build_pam_trie(df):
    trie = Trie()
    for i in df.index:
-      pam = df['sequence'][i]
-      sequences = df['possibilities'][i]
+      pam = df['Sequence'][i]
+      sequences = df['Possibilities'][i]
       for sequence in sequences:
          trie.insert(pam, sequence)
    return trie
@@ -89,8 +89,8 @@ def build_pam_map(df):
    pam_map = {}
    max_len = 0
    for i in df.index:
-      pam = df['sequence'][i]
-      sequences = df['possibilities'][i]
+      pam = df['Sequence'][i]
+      sequences = df['Possibilities'][i]
       for sequence in sequences:
          max_len = max(max_len, len(sequence))
          if sequence in pam_map:
@@ -135,7 +135,7 @@ def pick_best_pam(genome, pam_positions, index_of_mutation):
    if pam == "": 
       return pam_positions.keys[0]
 
-   print("\nIdeal PAM= {}".format(closest_pam))
+   print("\nIdeal PAM: '{}'".format(closest_pam))
    print("\tOccurs {} times in the sequence".format(smallest_num_pams))
    print("\tIs {} neucleotide(s) away from the mutation".format(min_))
 
@@ -155,13 +155,35 @@ def MutationLocation(source_file, reference_file):
 
     return mutation_index
 
+def parse_args():
+   parser = argparse.ArgumentParser()
+
+   parser.add_argument("--regular_file", help="Name of the file that has an unmutated genome string", type=str, required=True)
+   parser.add_argument("--mutated_file", help="Name of that has a mutated genome string", type=str, required=True)
+   parser.add_argument('--runtime', action='store_true',help='Outputs runtime analysis for given genome sequence', required=False)
+   args = parser.parse_args()
+   return args
+
+def output_results(pam_info): 
+   descriptors = list(pam_info)
+   i = 0
+   print("\nAdditional Information:")
+   for item in pam_info: 
+      print("\t{}: {}".format(descriptors[i],  pam_info[item].to_string(index=False)))
+      i+=1 
+   print()
+
 def main():
+   args = parse_args()
+   mutated_file = args.mutated_file
+   regular_file = args.regular_file
+   runtime = args.runtime 
+
    df = create_possibilities("pam_raw.csv")
-   mutated_file = "sample_2k_mutation.txt"
-   regular_file = "sample_2k.txt"
+
    genome = process_genome_txt(mutated_file)
-   mutated_genome = process_genome_txt(regular_file)
    index_of_mutation = MutationLocation(mutated_file, regular_file)
+   
    start1 = time.time()
    pam_trie = build_pam_trie(df)
    start2 = time.time()
@@ -172,14 +194,17 @@ def main():
    start4 = time.time()
    pam_positions = generate_pam_positions_hashmap(pam_map, max_len, genome)
    end2 = time.time()
-   print("Hashmap (no construction) " + str(round(end2 - start4, 9)))
-   print("Trie (no construction) " + str(round(end1 - start2, 9)))
-   print("Hashmap (with construction) " + str(round(end2 - start3, 9)))
-   print("Trie (with construction) " + str(round(end1 - start1, 9)))
+
+   if runtime: 
+      print("Hashmap (no construction) " + str(round(end2 - start4, 9)))
+      print("Trie (no construction) " + str(round(end1 - start2, 9)))
+      print("Hashmap (with construction) " + str(round(end2 - start3, 9)))
+      print("Trie (with construction) " + str(round(end1 - start1, 9)))
 
    best_pam = pick_best_pam(genome, pam_positions, index_of_mutation)
-   pam_info = df.loc[df['sequence'] == best_pam]
-   print("Additional PAM Info:\n{}".format(pam_info))
+   pam_info = df.loc[df['Sequence'] == best_pam]
+   output_results(pam_info)
+
 
 
 

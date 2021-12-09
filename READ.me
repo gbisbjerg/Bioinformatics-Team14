@@ -1,0 +1,61 @@
+
+Description: 
+
+    This program takes a file with a mutated genome and a regular genome and outputs the ideal PAM sequence for CRISPR 
+
+
+Instructions for how to run the program: 
+
+
+1).  Make sure you have the following installed:
+
+  1.) PamTrie
+  2.) pandas
+  3.) argparse 
+
+
+2). To run: 
+    
+    * All files print the results to standard out (Not a .csv or .txt file)
+    * The user will input the correct arguments below: 
+
+    usage: pam_frequency.py [-h] --regular_file REGULAR_FILE --mutated_file MUTATED_FILE [--runtime]
+
+    optional arguments:
+    -h, --help            show this help message and exit
+    --regular_file REGULAR_FILE
+                            Name of the file that has an unmutated genome string
+    --mutated_file MUTATED_FILE
+                            Name of that has a mutated genome string
+    --runtime             Outputs runtime analysis for given genome sequence
+
+
+    Example command: 
+        python3   pam_frequency.py --regular_file sample_2k.txt --mutated_file sample_2k_mutation.txt
+
+
+3). Output:
+
+    a). There will an output with: 
+
+        1.) The ideal PAM sequence 
+        2.) Information about the ideal PAM
+
+    Example: 
+
+        Ideal PAM: 'NYN'
+                Occurs 3 times in the sequence
+                Is 1 neucleotide(s) away from the mutation
+
+        Additional Information:
+                Name: SpRY - low efficiency PAM
+                BP: 20
+                Sequence: NYN
+                End: f
+                Possibilities: [ACA, ACG, ACC, ACT, ATA, ATG, ATC, ATT, GCA, G...
+    
+
+
+Compile/run-time errors that might be experienced: 
+
+• No known runtime errors or compile errors that you should experience 
